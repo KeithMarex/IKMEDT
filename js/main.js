@@ -9,7 +9,7 @@ for (let i = 1; i <= 9; i++){
 }
 
 removeScrew = (element) => {
-  return element.addEventListener("mouseenter", () => {
-    element.remove();
+  return element.addEventListener("mouseenter", function() {
+    this.remove();
   })
 }
