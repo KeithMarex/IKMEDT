@@ -1,7 +1,5 @@
-const screws = ['screw1', 'screw2', 'screw3', 'screw4', 'screw5', 'screw6', 'screw7', 'screw8', 'screw9'];
-
-for (let screw of screws){
-  AFRAME.registerComponent(screw, {
+for (let i = 1; i <= 9; i++){
+  AFRAME.registerComponent(`screw${i}`, {
     init: function () {
       var el = this.el;
       var data = this.data;
