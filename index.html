@@ -49,7 +49,7 @@
       <a-cursor color="black" animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
       animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
       animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
-      cursor="fuse: true;"></a-cursor>
+      cursor="fuse: true;" raycaster="objects: .pickup"></a-cursor>
     </a-camera>
 
     <a-sky src="assets/sky.jpg"></a-sky>
@@ -61,16 +61,20 @@
     <a-entity gltf-model="assets/plane/model.gltf" scale="30 30 30" position="-11.07 -54.26 -33" rotation="10.88 -90 -6.92"></a-entity>
 
 <!--    Multiple screws -->
-    <a-entity id="screw1" screw1 gltf-model="assets/screws/screw_blue/screw_blue.gltf" rotation="90 14.999999999999998 0" scale="0.5 0.5 0.5" position="-1.85266 1.60821 -10.94"></a-entity>
-    <a-entity id="screw2" screw2 gltf-model="assets/screws/screw_yellow/screw_yellow.gltf" rotation="90 14.999999999999998 0" scale="0.5 0.5 0.5" position="-0.25 1.402 -10.94"></a-entity>
-    <a-entity id="screw3" screw3 gltf-model="assets/screws/screw_blue/screw_blue.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="1.18 0.54 -10.94"></a-entity>
-    <a-entity id="screw4" screw4 gltf-model="assets/screws/screw_red/screw_red.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="1.18 1.84 -10.94"></a-entity>
-    <a-entity id="screw5" screw5 gltf-model="assets/screws/screw_yellow/screw_yellow.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="1.18 -1.19 -10.94"></a-entity>
-    <a-entity id="screw6" screw6 gltf-model="assets/screws/screw_red/screw_red.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="-0.33 -1.19 -10.94"></a-entity>
-    <a-entity id="screw7" screw7 gltf-model="assets/screws/screw_yellow/screw_yellow.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.01 -2.01 -10.94"></a-entity>
-    <a-entity id="screw8" screw8 gltf-model="assets/screws/screw_green/screw_green.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.29 -0.56 -10.94"></a-entity>
-    <a-entity id="screw9" screw9 gltf-model="assets/screws/screw_green/screw_green.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.83 0.43 -10.94"></a-entity>
-
+    <a-entity id="screw1" class="pickup" screw1 gltf-model="assets/screws/screw_blue/screw_blue.gltf" rotation="90 14.999999999999998 0" scale="0.5 0.5 0.5" position="-1.85266 1.60821 -10.94"></a-entity>
+    <a-entity id="screw2" class="pickup" screw2 gltf-model="assets/screws/screw_yellow/screw_yellow.gltf" rotation="90 14.999999999999998 0" scale="0.5 0.5 0.5" position="-0.25 1.402 -10.94"></a-entity>
+    <a-entity id="screw3" class="pickup" screw3 gltf-model="assets/screws/screw_blue/screw_blue.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="1.18 0.54 -10.94"></a-entity>
+    <a-entity id="screw4" class="pickup" screw4 gltf-model="assets/screws/screw_red/screw_red.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="1.18 1.84 -10.94"></a-entity>
+    <a-entity id="screw5" class="pickup" screw5 gltf-model="assets/screws/screw_yellow/screw_yellow.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="1.18 -1.19 -10.94"></a-entity>
+    <a-entity id="screw6" class="pickup" screw6 gltf-model="assets/screws/screw_red/screw_red.gltf" rotation="89.25 14.999999999999998 0" scale="0.5 0.5 0.5" position="-0.33 -1.19 -10.94"></a-entity>
+    <a-entity id="screw7" class="pickup" screw7 gltf-model="assets/screws/screw_yellow/screw_yellow.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.01 -2.01 -10.94"></a-entity>
+    <a-entity id="screw8" class="pickup" screw8 gltf-model="assets/screws/screw_green/screw_green.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.29 -0.56 -10.94"></a-entity>
+    <a-entity id="screw9" class="pickup" screw9 gltf-model="assets/screws/screw_green/screw_green.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.83 0.43 -10.94"></a-entity>
+    
+    <a-entity id="screwdriver_green" screw9 gltf-model="assets/screwdrivers/screwdriver_green/screwdriver_green.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.83 0.43 -10.94"></a-entity>
+    <a-entity id="screwdriver_blue" screw9 gltf-model="assets/screwdrivers/screwdriver_blue/screwdriver_blue.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.83 0.43 -10.94"></a-entity>
+    <a-entity id="screwdriver_yellow" screw9 gltf-model="assets/screwdrivers/screwdriver_yellow/screwdriver_yellow.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.83 0.43 -10.94"></a-entity>
+    <a-entity id="screwdriver_red" screw9 gltf-model="assets/screwdrivers/screwdriver_red/screwdriver_red.gltf" rotation="89.19 14.71 0" scale="0.5 0.5 0.5" position="-1.83 0.43 -10.94"></a-entity>
   </a-scene>
 </body>
 
