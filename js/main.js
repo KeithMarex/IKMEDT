@@ -1,15 +1,27 @@
 const equippableItems = document.getElementsByClassName('pickup')
+const equippableItemsBackup = equippableItems
 const camera = document.getElementById("camera")
-const heldItem = null
+let heldItem = null
 
 for (let equippableItem of equippableItems) {
   console.log(equippableItem)
-  equippableItem.addEventListener('click', (event) => {
+  equippableItem.addEventListener('click', function(event) {
     console.log('CLICKED')
-    console.log(event)
-    if (heldItem == null) {
-      
+    if (heldItem !== null) {
+      return
     }
+
+    let copiedNode = event.currentTarget.cloneNode(true)
+    
+    copiedNode.setAttribute('rotation', "65 110 100")
+    copiedNode.setAttribute('position', "1 -1 -5")
+
+    camera.appendChild(copiedNode)
+
+    if (heldItem == null) {
+      heldItem = copiedNode
+    }
+    this.remove()
   })
 }
 
