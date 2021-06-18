@@ -2,11 +2,9 @@ const equippableItems = document.getElementsByClassName('pickup')
 const camera = document.getElementById("camera")
 const heldItem = null
 
-console.log(equippableItems)
-
-for (let i = 0; i < equippableItems.length; i++) {
-  console.log(equippableItems[i])
-  equippableItems[i].addEventListener('click', (event) => {
+for (let equippableItem of equippableItems) {
+  console.log(equippableItem)
+  equippableItem.addEventListener('click', (event) => {
     console.log('CLICKED')
     console.log(event)
     if (heldItem == null) {
