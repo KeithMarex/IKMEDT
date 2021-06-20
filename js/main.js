@@ -22,6 +22,7 @@ AFRAME.registerComponent('screw', {
     el.setAttribute('gltf-model', `../assets/screws/screw_${color}/screw_${color}.gltf`)
 
     el.addEventListener('click', () => removeScrew(this));
+    el.addEventListener('mouseleave', () => resetScrew(this))
   }
 })
 
@@ -33,9 +34,28 @@ AFRAME.registerComponent('screwdriver', {
   }
 })
 
+resetScrew = (element) => {
+  // console.log(element)
+  if (element.removalAnimation)
+    element.removalAnimation.reset()
+}
+
 removeScrew = (element) => {
-  if (heldItem && heldItem.getAttribute('id').endsWith(element.data.color)) {
-    element.el.remove()
+  if (!heldItem || !heldItem.getAttribute('id').endsWith(element.data.color))
+    return
+
+  if (!element.removalAnimation) {
+    element.removalAnimation = AFRAME.ANIME({
+      targets: element.el,
+      scale: ['0.5 0.5 0.5', '0.15 0.15 0.15'],
+      easing: 'linear',
+      duration: 1500,
+      complete: () => {
+        element.el.remove()
+      }
+    })
+  } else {
+    element.removalAnimation.play()
   }
 }
 
