@@ -21,7 +21,7 @@ AFRAME.registerComponent('screw', {
 
     el.setAttribute('gltf-model', `../assets/screws/screw_${color}/screw_${color}.gltf`)
 
-    el.addEventListener('click', () => removeScrew(el));
+    el.addEventListener('click', () => removeScrew(this));
   }
 })
 
@@ -34,10 +34,9 @@ AFRAME.registerComponent('screwdriver', {
 })
 
 removeScrew = (element) => {
-  console.log('Clicked!')
-  // element.remove();
-  element.setAttribute('color', 'red')
-  // console.log(element);
+  if (heldItem && heldItem.getAttribute('id').endsWith(element.data.color)) {
+    element.el.remove()
+  }
 }
 
 function setHeldItem(item) {
