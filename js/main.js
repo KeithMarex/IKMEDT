@@ -1,30 +1,37 @@
-const equippableItems = document.getElementsByClassName('pickup')
-const screwdriversContainer = document.getElementById('screwdrivers')
-const equippableItemsBackup = equippableItems
-const camera = document.getElementById("camera")
-let heldItem = null
+let heldItem
+let screwdriversContainer
+let equippableItemsBackup
+let camera
 
-for (let equippableItem of equippableItems) {
-  equippableItem.addEventListener('click', changeScrewdriver)
-}
+window.addEventListener('load', () => {
+  const equippableItems = document.getElementsByClassName('pickup')
+  heldItem = null
+  screwdriversContainer = document.getElementById('screwdrivers')
+  equippableItemsBackup = equippableItems
+  camera = document.getElementById("camera")
+})
 
-for (let i = 1; i <= 9; i++){
-  AFRAME.registerComponent(`screw${i}`, {
-    init: function () {
-      const { el } = this;
+AFRAME.registerComponent('screw', {
+  init: function () {
+    const { el } = this;
 
-      removeScrew(el);
-    }
-  });
-}
+    el.addEventListener('click', () => removeScrew(el));
+  }
+})
+
+AFRAME.registerComponent('screwdriver', {
+  init: function () {
+    const { el } = this;
+
+    el.addEventListener('click', changeScrewdriver);
+  }
+})
 
 removeScrew = (element) => {
-  return element.addEventListener("click", () => {
-    console.log('CLICKED')
-    // element.remove();
-    element.setAttribute('color', 'red')
-    // console.log(element);
-  })
+  console.log('CLICKED')
+  // element.remove();
+  element.setAttribute('color', 'red')
+  // console.log(element);
 }
 
 function setHeldItem(item) {
