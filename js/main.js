@@ -19,10 +19,40 @@ AFRAME.registerComponent('screw', {
     const { el, data } = this;
     const { color } = data
 
+    this.hovering = false
+
     el.setAttribute('gltf-model', `../assets/screws/screw_${color}/screw_${color}.gltf`)
 
     el.addEventListener('click', () => removeScrew(this));
     el.addEventListener('mouseleave', () => resetScrew(this))
+
+    var self = this;
+    this.time = 0;
+    this.animation = AFRAME.ANIME({
+      targets: [{x: -Math.PI / 2, y: 0, z: 0}],
+      autoplay: false,
+      duration: 1500,
+      easing: "linear",
+      update: function (animation) {
+        // var value = animation.animatables[0].target;
+        console.log(animation)
+        self.el.object3D.scale.set(
+          0.5 + (self.time / 1500), 0.5 + (self.time / 1500), 0.5 + (self.time / 1500)
+        );
+      },
+      complete: function () {
+        el.remove()
+      }
+    });
+    this.animation.began = true;
+  },
+  tick: function (t, dt) {
+    if (this.hovering) {
+      this.time += dt;
+      this.animation.tick(this.time);
+    } else if (!this.hovering && this.time > 0) {
+      this.time = 0
+    }
   }
 })
 
@@ -35,28 +65,16 @@ AFRAME.registerComponent('screwdriver', {
 })
 
 resetScrew = (element) => {
-  // console.log(element)
-  if (element.removalAnimation)
-    element.removalAnimation.reset()
+  element.hovering = false
+  element.time = 0
+  element.el.setAttribute('scale', '0.5 0.5 0.5')
 }
 
 removeScrew = (element) => {
   if (!heldItem || !heldItem.getAttribute('id').endsWith(element.data.color))
     return
 
-  if (!element.removalAnimation) {
-    element.removalAnimation = AFRAME.ANIME({
-      targets: element.el,
-      scale: ['0.5 0.5 0.5', '0.15 0.15 0.15'],
-      easing: 'linear',
-      duration: 1500,
-      complete: () => {
-        element.el.remove()
-      }
-    })
-  } else {
-    element.removalAnimation.play()
-  }
+  element.hovering = true
 }
 
 function setHeldItem(item) {
