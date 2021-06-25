@@ -2,6 +2,7 @@ let heldItem
 let screwdriversContainer
 let equippableItemsBackup
 let camera
+let rustlingSound = new Audio('../audio/screwing.mp3')
 
 window.addEventListener('load', () => {
   const equippableItems = document.getElementsByClassName('pickup')
@@ -19,6 +20,7 @@ AFRAME.registerComponent('screw', {
     const { el, data } = this;
     const { color } = data
 
+    this.animDuration = 3000
     this.hovering = false
 
     el.setAttribute('gltf-model', `../assets/screws/screw_${color}/screw_${color}.gltf`)
@@ -31,16 +33,16 @@ AFRAME.registerComponent('screw', {
     this.animation = AFRAME.ANIME({
       targets: [{x: -Math.PI / 2, y: 0, z: 0}],
       autoplay: false,
-      duration: 1500,
+      duration: this.animDuration,
       easing: "linear",
       update: function (animation) {
         // var value = animation.animatables[0].target;
-        console.log(animation)
         self.el.object3D.scale.set(
-          0.5 + (self.time / 1500), 0.5 + (self.time / 1500), 0.5 + (self.time / 1500)
+          0.5 + (self.time / self.animDuration), 0.5 + (self.time / self.animDuration), 0.5 + (self.time / self.animDuration)
         );
       },
       complete: function () {
+        new Audio('../audio/pop.mp3').play();
         el.remove()
       }
     });
@@ -65,6 +67,8 @@ AFRAME.registerComponent('screwdriver', {
 })
 
 resetScrew = (element) => {
+  rustlingSound.currentTime = 0
+  rustlingSound.pause()
   element.hovering = false
   element.time = 0
   element.el.setAttribute('scale', '0.5 0.5 0.5')
@@ -72,8 +76,9 @@ resetScrew = (element) => {
 
 removeScrew = (element) => {
   if (!heldItem || !heldItem.getAttribute('id').endsWith(element.data.color))
-    return
-
+  return
+  
+  rustlingSound.play()
   element.hovering = true
 }
 
