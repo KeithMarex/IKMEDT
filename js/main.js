@@ -10,7 +10,8 @@ window.addEventListener('load', () => {
   screwdriversContainer = document.getElementById('screwdrivers')
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
-  goToPaintScene()
+  document.getElementById('paintScene').setAttribute('visible', 'false')
+  // goToPaintScene()
 })
 
 AFRAME.registerComponent('screw', {
