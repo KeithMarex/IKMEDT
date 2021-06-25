@@ -10,6 +10,7 @@ window.addEventListener('load', () => {
   screwdriversContainer = document.getElementById('screwdrivers')
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
+  goToPaintScene()
 })
 
 AFRAME.registerComponent('screw', {
@@ -77,7 +78,7 @@ resetScrew = (element) => {
 removeScrew = (element) => {
   if (!heldItem || !heldItem.getAttribute('id').endsWith(element.data.color))
   return
-  
+
   rustlingSound.play()
   element.hovering = true
 }
@@ -127,6 +128,11 @@ function changeScrewdriver(event) {
   }
 
   this.remove()
+}
+
+goToPaintScene = () => {
+  switchScene('screwScene', 'paintScene');
+  camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
 }
 
 switchScene = (currScene, newScene) => {
