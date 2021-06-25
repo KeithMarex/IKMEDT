@@ -96,7 +96,7 @@ function changeScrewdriver(event) {
   }
 
   let copiedNode = event.currentTarget.cloneNode(true)
-  
+
   setHeldItem(copiedNode)
 
   if (heldItem == null) {
@@ -104,4 +104,9 @@ function changeScrewdriver(event) {
   }
 
   this.remove()
+}
+
+switchScene = (currScene, newScene) => {
+  document.getElementById(newScene).setAttribute('visible', 'true')
+  document.getElementById(currScene).setAttribute('visible', 'false')
 }
