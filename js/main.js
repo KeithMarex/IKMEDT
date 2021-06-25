@@ -3,6 +3,10 @@ let screwdriversContainer
 let equippableItemsBackup
 let camera
 let rustlingSound = new Audio('../audio/screwing.mp3')
+let bgWind = new Audio('../audio/bg_wind.mp3')
+bgWind.loop = true
+bgWind.volume = 0.25
+bgWind.play()
 
 window.addEventListener('load', () => {
   const equippableItems = document.getElementsByClassName('pickup')
@@ -78,7 +82,7 @@ resetScrew = (element) => {
 
 removeScrew = (element) => {
   if (!heldItem || !heldItem.getAttribute('id').endsWith(element.data.color))
-  return
+    return
 
   rustlingSound.play()
   element.hovering = true
@@ -95,6 +99,9 @@ function setHeldItem(item) {
 }
 
 function changeScrewdriver(event) {
+  let pickupAudio = new Audio('../audio/pickup.mp3')
+  pickupAudio.play()
+
   if (heldItem !== null) {
     let foundBackup = null
 
