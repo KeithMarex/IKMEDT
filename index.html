@@ -44,18 +44,19 @@
   <script src="https://www.google-analytics.com/analytics.js" async></script>
 
   <a-scene stats>
-
-    <a-camera id="camera" position="-13.89556 5.93343 -5.41987" rotation="-14.782311114375245 -95.11099399171725 0" camera="" mouse-cursor="" look-controls="" wasd-controls="" data-aframe-inspector-original-camera="">
-      <a-cursor
-        color="white"
-        animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 0; from: 0.1 0.1 0.1; to: 1 1 1"
-        animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
-        animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
-        cursor="fuse: true"
-        raycaster="objects: .interactable"
-        geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
-        material="color: black; shader: flat"></a-cursor>
-    </a-camera>
+    <a-entity id="rig" position="-13.89556 5.93343 -5.41987">
+      <a-camera id="camera" position="0 0 0" rotation="-14.782311114375245 -95.11099399171725 0" camera mouse-cursor="" look-controls wasd-controls="" data-aframe-inspector-original-camera="">
+        <a-cursor
+          color="white"
+          animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 0; from: 0.1 0.1 0.1; to: 1 1 1"
+          animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+          animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+          cursor="fuse: true"
+          raycaster="objects: .interactable"
+          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+          material="color: black; shader: flat"></a-cursor>
+      </a-camera>
+    </a-entity>
     <a-sky src="assets/sky.jpg"></a-sky>
 
 <!--    Landschap -->
