@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
   paintdotsContainer = document.getElementById('paintdots')
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
-  goToPaintScene()
+  // goToPaintScene()
 })
 
 AFRAME.registerComponent('screw', {
