@@ -18,32 +18,36 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/index.css">
 
   <meta name="theme-color" content="#fafafa">
 
-<!-- Aframe import -->
+  <!-- Aframe import -->
+  <!-- <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script> -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  
+  <!-- Add your site or application content here -->
+  <script src="js/vendor/modernizr-3.11.2.min.js" defer></script>
+  <script src="js/plugins.js" defer></script>
 
-<!--  Own JS -->
+  <!--  Own JS -->
   <script src="js/main.js"></script>
 
 </head>
 
 <body>
+  <main>
+    <h2 id="title_text">
+      After a few hours of sulking a mysterious boy appears
+    </h2>
+    <video controls autoplay id="intro_video">
+      <source src="video/little_prince_intro_trim.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </main>
 
-  <!-- Add your site or application content here -->
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="js/plugins.js"></script>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
-
-  <a-scene stats device-orientation-permission-ui="disabled">
+  <a-scene stats class="hide" id="mainScene">
 
     <!-- Camera -->
     <a-camera id="camera" position="-13.89556 5.93343 -5.41987" rotation="-14.782311114375245 -95.11099399171725 0" camera mouse-cursor="" look-controls wasd-controls="" data-aframe-inspector-original-camera="">
@@ -69,6 +73,16 @@
 
       <!--    Plane wreck -->
       <a-entity gltf-model="assets/plane/model.gltf" scale="30 30 30" position="-11.07 -47.77666 -33" rotation="4.113264011244181 -130.49228375663526 -6.920184249590083"></a-entity>
+
+      <a-entity 
+        id="little_prince"
+        scale="0.4 0.4 0.4"
+        gltf-model="assets/kleine_prins/kleine_prins_by_jaap.gltf"
+        position="-16.67433 3.92902 6.37158"
+        rotation="4.041071329057696 163.1273868094918 -3.941949630500064"
+        animation-mixer="clip: talk; loop: true"
+        prince>
+      </a-entity>
 
       <!--    Multiple screws -->
       <a-entity id="screws" scale="0.5 0.5 0.5" position="-13.04525 5.77 -2.31726" rotation="4.616 -48.571 -0.032">

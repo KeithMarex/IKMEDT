@@ -7,10 +7,16 @@ let camera
 let rustlingSound = new Audio('../audio/screwing.mp3')
 let bgWind = new Audio('../audio/bg_wind.mp3')
 bgWind.loop = true
-bgWind.volume = 0.25
-bgWind.play()
+bgWind.volume = 0.5
+let videoPhase = 0
 
 window.addEventListener('load', () => {
+  startupSequence()
+  // let prince = document.getElementById('little_prince')
+  // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
+})
+
+function startGame() {
   const equippableItems = document.getElementsByClassName('pickup')
   heldItem = null
   screwdriversContainer = document.getElementById('screwdrivers')
@@ -19,6 +25,13 @@ window.addEventListener('load', () => {
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
   // goToPaintScene()
+}
+
+AFRAME.registerComponent('prince', {
+  init: function () {
+    console.log(this)
+    this.animation
+  }
 })
 
 AFRAME.registerComponent('screw', {
@@ -110,6 +123,40 @@ AFRAME.registerComponent('pencil', {
     el.addEventListener('click', changeScrewdriver);
   }
 })
+
+function startupSequence() {
+  let video = document.getElementById('intro_video');
+  video.volume = 0.2;
+  video.src = 'video/little_prince_intro_trim.mp4'
+
+  let titleText = document.getElementById('title_text');
+  console.log('we here')
+
+  video.addEventListener('ended', function(){
+      videoPhase++
+      
+      if (videoPhase < 2) {
+        titleText.classList.add('visible')
+        video.classList.add('hide')
+        bgWind.play()
+
+        setTimeout(() => {
+          titleText.classList.remove('visible')
+          video.classList.remove('hide')
+          video.src = 'video/little_prince_intro_trim_2.mp4'
+        }, 3000)
+      } else {
+        titleText.classList.add('visible')
+        video.classList.add('hide')
+        titleText.innerHTML = 'LITTLE PRINCE VR'
+        setTimeout(() => {
+          titleText.remove()
+          document.getElementById('mainScene').classList.remove('hide')
+          startGame()
+        }, 3000)
+      }
+  })
+}
 
 resetScrew = (element) => {
   rustlingSound.currentTime = 0
