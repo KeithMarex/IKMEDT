@@ -43,7 +43,7 @@
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async></script>
 
-  <a-scene stats>
+  <a-scene stats device-orientation-permission-ui="disabled">
 
     <!-- Camera -->
     <a-camera id="camera" position="-13.89556 5.93343 -5.41987" rotation="-14.782311114375245 -95.11099399171725 0" camera mouse-cursor="" look-controls wasd-controls="" data-aframe-inspector-original-camera="">
@@ -55,6 +55,9 @@
         raycaster="objects: .interactable"
         geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
         material="color: black; shader: flat"></a-cursor>
+        <a-sphere id="lord-fader" radius="0.05"
+              material="shader:flat; color: black; opacity: 0.0; side: double "
+              animation="property: material.opacity; from: 0.0; to: 1.0; dur: 3000; dir: alternate; loop: 2; startEvents: animate"></a-sphere>
     </a-camera>
 
     <!--    Screw Scene -->
@@ -100,11 +103,50 @@
 
       <!-- Easel -->
       <a-entity gltf-model="assets/easel/model.gltf" scale="" position="-22.43274 3.60264 -5.9086" rotation="0 75 0">
-        <a-entity gltf-model="assets/pencil/pencil.gltf" class="pickup interactable" screwdriver scale="0.05 0.05 0.05" position="-1.41593 -0.21668 0.79845" rotation="0 -18.8 90"></a-entity>
+        <a-entity gltf-model="assets/pencil/pencil.gltf" class="pickup interactable" pencil scale="0.05 0.05 0.05" position="-1.41593 -0.21668 0.79845" rotation="0 -18.8 90"></a-entity>
       </a-entity>
 
       <!-- Paint bucket -->
       <a-entity gltf-model="assets/paintbucket/model.gltf" class="interactable" scale="" position="-22.43274 -0.07134 -5.9086" rotation="0 75 0"></a-entity>
+
+      <!-- Sheep painting object -->
+      <a-entity geometry="" material="color: white" position="-21.94547 5.06212 -4.02338" rotation="0 -30 -11.03" scale="0.1 2.25 1.74">
+        <a-entity line="start: 1 0 -1; end: 1 0 0; color: black" position="-1.64568 -0.51219 0.49"></a-entity>
+        <a-entity line="start: 1 0 -1; end: 1 0 0; color: black" position="-1.83955 0.48241 0.49"></a-entity>
+        <a-entity line="start: 1 0 -1; end: 1 0 0; color: black" position="-1.83887 0.47896 0.49" rotation="-90 0 0"></a-entity>
+        <a-entity line="start: 1 0 -1; end: 1 0 0; color: black" position="-1.83887 0.47896 -0.5" rotation="-90 0 0"></a-entity>
+
+        <a-entity id="paintdots">
+          <a-cylinder class="interactable" paintdot="id: 1" visible="true"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.72839 -0.37237 -0.13941"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 2" visible="false" color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.74856 -0.33007 -0.136"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 3" visible="false" color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.74856 -0.29007 -0.14645"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 4" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.78512 -0.26413 -0.2"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 5" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.80103 -0.18252 -0.2"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 6" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.81545 -0.10854 -0.2"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 7" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.059 -0.12"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 8" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.059 -0.02"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 9" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.059 0.1"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 10" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.059 0.18"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 11" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 0.021 0.26"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 12" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 0.051 0.33"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 13" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 0.021 0.39"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 14" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.059 0.43"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 15" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.109 0.34"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 16" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.149 0.23"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 17" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.209 0.23"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 18" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.249 0.21"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 19" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.329 0.21"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 20" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.379 0.21"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 21" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.379 0.15"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 22" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.329 0.15"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 23" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.289 0.1"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 24" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.289 0.04"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 25" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.309 0.01"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 26" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.329 -0.06"></a-cylinder>
+          <a-cylinder class="interactable" paintdot="id: 27" visible="false"  color="crimson" radius="1.5" material="" geometry="" rotation="0 0 -90" scale="0.01 0.01 0.01" position="-4.56671 -0.379 -0.06"></a-cylinder>
+        </a-entity>
+
+      </a-entity>
 
     </a-entity>
 

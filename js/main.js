@@ -1,5 +1,6 @@
 let heldItem
 let screwdriversContainer
+let paintdotsContainer
 let equippableItemsBackup
 let camera
 let rustlingSound = new Audio('../audio/screwing.mp3')
@@ -12,10 +13,11 @@ window.addEventListener('load', () => {
   const equippableItems = document.getElementsByClassName('pickup')
   heldItem = null
   screwdriversContainer = document.getElementById('screwdrivers')
+  paintdotsContainer = document.getElementById('paintdots')
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
   document.getElementById('paintScene').setAttribute('visible', 'false')
-  // goToPaintScene()
+  goToPaintScene()
 })
 
 AFRAME.registerComponent('screw', {
@@ -65,6 +67,36 @@ AFRAME.registerComponent('screw', {
 })
 
 AFRAME.registerComponent('screwdriver', {
+  init: function () {
+    const { el } = this;
+
+    el.addEventListener('click', changeScrewdriver);
+  }
+})
+
+AFRAME.registerComponent('paintdot', {
+  schema: {
+    id: { type: 'int' }
+  },
+  init: function () {
+    const { el, data } = this;
+    const { id } = data;
+
+
+    el.addEventListener('click', () => {
+      if (id === 27){
+        new Audio('../audio/kids_cheering.mp3').play();
+      } else {
+        new Audio('../audio/pencil_write.mp3').play();
+      console.log(paintdotsContainer.children[id]);
+      this.el.classList.remove('interactable');
+      paintdotsContainer.children[id].setAttribute('visible', true);
+      }
+    });
+  }
+})
+
+AFRAME.registerComponent('pencil', {
   init: function () {
     const { el } = this;
 
@@ -139,8 +171,12 @@ function changeScrewdriver(event) {
 }
 
 goToPaintScene = () => {
-  switchScene('screwScene', 'paintScene');
-  camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
+  document.querySelector('#lord-fader').emit('animate');
+  setTimeout(() => {
+    switchScene('screwScene', 'paintScene');
+    camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
+  }, 2000)
+
 }
 
 switchScene = (currScene, newScene) => {
