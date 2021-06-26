@@ -57,7 +57,7 @@
         material="color: black; shader: flat"></a-cursor>
         <a-sphere id="lord-fader" radius="0.05"
               material="shader:flat; color: black; opacity: 0.0; side: double "
-              animation="property: material.opacity; from: 0.0; to: 1.0; dur: 3000; dir: alternate; loop: 2; startEvents: animate"></a-sphere>
+              animation="property: material.opacity; from: 0.0; to: 1.0; dur: 2000; dir: alternate; loop: 2; startEvents: animate"></a-sphere>
     </a-camera>
 
     <!--    Screw Scene -->
@@ -92,7 +92,7 @@
     </a-entity>
 
     <!--    Paint scene -->
-    <a-entity id="paintScene">
+    <a-entity id="paintScene" visible="false">
       <a-sky src="assets/sky.jpg"></a-sky>
 
       <!--    Landschap -->
