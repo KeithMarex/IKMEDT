@@ -38,6 +38,7 @@ function startGame() {
 
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
+  camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
 }
 
 AFRAME.registerComponent('prince', {
@@ -355,8 +356,8 @@ goToPlaneScene = () => {
   console.log(prince.prince)
   setTimeout(() => {
     switchScene('paintScene', 'screwScene');
-    camera.object3D.position.set(0, 0, 0);
-    // camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
+    // camera.object3D.position.set(0, 0, 0);
+    camera.object3D.position.set(-15, 5.93343, -5.41987);
     prince.emit('startPlaneScene', false)
   }, 2000)
 }
