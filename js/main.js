@@ -29,7 +29,6 @@ let screwSceneAudioCount = [0, 0]
 
 window.addEventListener('load', () => {
   startupSequence(true);
-  goToPlaneScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -109,6 +108,7 @@ AFRAME.registerComponent('prince', {
   
           if (screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
             goToFlyScene();
+            heldItem.remove();
           }
   
           return
