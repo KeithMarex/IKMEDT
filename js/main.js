@@ -62,8 +62,8 @@ AFRAME.registerComponent('prince', {
       lookAtMeTimeout = setTimeout(() => {
         this.lookAtMeCount = this.lookAtMeCount % 3 + 1
         lookAtMeAudio.src = `audio/littlePrince/lookatme${this.lookAtMeCount}.mp3`
-        console.log('LOOKATME3')
         lookAtMeAudio.play()
+        console.log('LAM3')
       }, 1000)
     })
     this.el.addEventListener('startPlaneScene', () => {
@@ -71,8 +71,8 @@ AFRAME.registerComponent('prince', {
         clearTimeout(lookAtMeTimeout)
 
       lookAtMeTimeout = setTimeout(() => {
-        console.log('LOOKATME4')
         lookAtMeAudio.play()
+        console.log('LAM4')
       }, 1000)
     })
     this.el.addEventListener('mouseenter', () => {
@@ -87,6 +87,7 @@ AFRAME.registerComponent('prince', {
       this.screwSceneAudioCount[1] = 0
       lookAtMeAudio.pause()
       this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
+      console.log('LAM1')
       this.currentSpeechAudio.play()
     })
     this.el.addEventListener('mouseleave', () => {
@@ -97,18 +98,16 @@ AFRAME.registerComponent('prince', {
       this.currentSpeechAudio.currentTime = 0
       this.screwSceneAudioCount[1] = 0
       lookAtMeAudio.play()
+      console.log('LAM2')
       this.currentSpeechAudio.pause()
     })
     this.currentSpeechAudio.addEventListener('ended', () => {
-      console.log(this.screwSceneAudioCount)
       if (this.screwSceneAudioCount[1] >= 1) {
         mayScrew = true
         this.screwSceneAudioCount[0]++
         this.screwSceneAudioCount[1] = 0
 
         lookAtMeAudio.pause()
-
-        console.log('RESET AND ONE UP')
 
         if (this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
           alert('SCENE DONE')
@@ -160,8 +159,8 @@ AFRAME.registerComponent('screw', {
         el.remove()
         if (screwsContainer.children.length >= 1) {
           mayScrew = false
-          console.log('LOOKATME2')
           lookAtMeAudio.play()
+          console.log('LAM3')
         }
       }
     });
@@ -368,7 +367,6 @@ function changeScrewdriver(event) {
 
 goToPlaneScene = () => {
   document.querySelector('#lord-fader').emit('animate');
-  console.log(prince.prince)
   setTimeout(() => {
     switchScene('paintScene', 'screwScene');
     // camera.object3D.position.set(0, 0, 0);
