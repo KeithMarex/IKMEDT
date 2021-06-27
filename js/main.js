@@ -11,17 +11,23 @@ bgWind.volume = 0.5
 let videoPhase = 0
 let mayScrew = false
 let paintDrawing = "sheep";
+let prince
+let screwSceneAudioOrder = [
+  ['littlePrince/whatareyoudoing', 'pop'],
+  ['littlePrince/ohokbutwhy', 'pop'],
+  ['littlePrince/nobueno', 'pop'],
+  ['littlePrince/doyouthinkthesheepyoudrew', 'pop']
+]
+lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 
 window.addEventListener('load', () => {
   startupSequence(true)
-  // goToPlaneScene()
-  // goToFlyScene()
-  // let prince = document.getElementById('little_prince')
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
 function startGame() {
   // goToPlaneScene()
+  prince = document.getElementById('little_prince')
   const equippableItems = document.getElementsByClassName('pickup')
   heldItem = null
   screwdriversContainer = document.getElementById('screwdrivers')
@@ -32,22 +38,71 @@ function startGame() {
 
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
-  camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
 }
 
 AFRAME.registerComponent('prince', {
   init: function () {
-    this.animation
-    this.lookAtMeCount = 1
-    this.lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
-    this.lookAtMeAudio.volume = 0.5
-    this.lookAtMeAudio.play()
-    this.lookAtMeAudio.addEventListener('ended', () => {
+    this.screwSceneAudioCount = [0, 0]
+    this.currentSpeechAudio = new Audio('audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3')
+    this.lookAtMeCount = 0
+    
+    lookAtMeAudio.volume = 0.5
+    lookAtMeAudio.addEventListener('ended', () => {
       setTimeout(() => {
         this.lookAtMeCount = this.lookAtMeCount % 3 + 1
-        this.lookAtMeAudio.src = `audio/littlePrince/lookatme${this.lookAtMeCount}.mp3`
-        this.lookAtMeAudio.play()
+        lookAtMeAudio.src = `audio/littlePrince/lookatme${this.lookAtMeCount}.mp3`
+        lookAtMeAudio.play()
       }, 1000)
+    })
+    this.el.addEventListener('startPlaneScene', () => {
+      setTimeout(() => {
+        lookAtMeAudio.play()
+      }, 1000)
+    })
+    this.el.addEventListener('mouseenter', () => {
+      if (mayScrew)
+        return
+      lookAtMeAudio.currentTime = 0
+      this.currentSpeechAudio.currentTime = 0
+      this.screwSceneAudioCount[1] = 0
+      lookAtMeAudio.pause()
+      this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
+      this.currentSpeechAudio.play()
+    })
+    this.el.addEventListener('mouseleave', () => {
+      console.log('MOUSE LEFTTT')
+      if (mayScrew || this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length)
+        return
+      lookAtMeAudio.currentTime = 0
+      this.currentSpeechAudio.currentTime = 0
+      this.screwSceneAudioCount[1] = 0
+      lookAtMeAudio.play()
+      this.currentSpeechAudio.pause()
+    })
+    this.currentSpeechAudio.addEventListener('ended', () => {
+      console.log(this.screwSceneAudioCount)
+      if (this.screwSceneAudioCount[1] >= 1) {
+        mayScrew = true
+        this.screwSceneAudioCount[0]++
+        this.screwSceneAudioCount[1] = 0
+
+        lookAtMeAudio.pause()
+
+        console.log('RESET AND ONE UP')
+
+        if (this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
+          console.log('DONE!!')
+          mayScrew = false
+        }
+
+        return
+
+      } else {
+        this.screwSceneAudioCount[1]++
+      }
+
+      this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
+      this.currentSpeechAudio.play()
     })
   }
 })
@@ -86,7 +141,11 @@ AFRAME.registerComponent('screw', {
         el.remove()
         if (screwsContainer.children.length === 0){
           heldItem.remove();
+          camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
           goToPaintScene();
+        } else {
+          mayScrew = false
+          lookAtMeAudio.play()
         }
       }
     });
@@ -234,7 +293,7 @@ resetScrew = (element) => {
 }
 
 removeScrew = (element) => {
-  if (!heldItem || !heldItem.getAttribute('id').endsWith(element.data.color))
+  if (!heldItem || !heldItem.getAttribute('id').endsWith(element.data.color) || !mayScrew)
     return
 
   rustlingSound.play()
@@ -293,9 +352,12 @@ function changeScrewdriver(event) {
 
 goToPlaneScene = () => {
   document.querySelector('#lord-fader').emit('animate');
+  console.log(prince.prince)
   setTimeout(() => {
     switchScene('paintScene', 'screwScene');
     camera.object3D.position.set(0, 0, 0);
+    // camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
+    prince.emit('startPlaneScene', false)
   }, 2000)
 }
 
