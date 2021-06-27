@@ -28,7 +28,6 @@ let lookAtMeTimeout
 
 window.addEventListener('load', () => {
   startupSequence(true)
-  goToFlyScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -53,74 +52,74 @@ AFRAME.registerComponent('prince', {
     this.screwSceneAudioCount = [0, 0]
     this.currentSpeechAudio = new Audio('audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3')
     this.lookAtMeCount = 0
-    
+
     lookAtMeAudio.volume = 0.5
-    lookAtMeAudio.addEventListener('ended', () => {
+
+    this.el.addEventListener('startScrewScene', () => {
       if (lookAtMeTimeout != null)
         clearTimeout(lookAtMeTimeout)
-
-      lookAtMeTimeout = setTimeout(() => {
-        this.lookAtMeCount = this.lookAtMeCount % 3 + 1
-        lookAtMeAudio.src = `audio/littlePrince/lookatme${this.lookAtMeCount}.mp3`
-        lookAtMeAudio.play()
-        console.log('LAM3')
-      }, 1000)
-    })
-    this.el.addEventListener('startPlaneScene', () => {
-      if (lookAtMeTimeout != null)
-        clearTimeout(lookAtMeTimeout)
-
+        material="visible: false"
       lookAtMeTimeout = setTimeout(() => {
         lookAtMeAudio.play()
-        console.log('LAM4')
       }, 1000)
-    })
-    this.el.addEventListener('mouseenter', () => {
-      if (lookAtMeTimeout != null)
-        clearTimeout(lookAtMeTimeout)
 
-      if (mayScrew)
-        return
-
-      lookAtMeAudio.currentTime = 0
-      this.currentSpeechAudio.currentTime = 0
-      this.screwSceneAudioCount[1] = 0
-      lookAtMeAudio.pause()
-      this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
-      console.log('LAM1')
-      this.currentSpeechAudio.play()
-    })
-    this.el.addEventListener('mouseleave', () => {
-      if (mayScrew)
-        return
-
-      lookAtMeAudio.currentTime = 0
-      this.currentSpeechAudio.currentTime = 0
-      this.screwSceneAudioCount[1] = 0
-      lookAtMeAudio.play()
-      console.log('LAM2')
-      this.currentSpeechAudio.pause()
-    })
-    this.currentSpeechAudio.addEventListener('ended', () => {
-      if (this.screwSceneAudioCount[1] >= 1) {
-        mayScrew = true
-        this.screwSceneAudioCount[0]++
+      lookAtMeAudio.addEventListener('ended', () => {
+        if (lookAtMeTimeout != null)
+          clearTimeout(lookAtMeTimeout)
+  
+        lookAtMeTimeout = setTimeout(() => {
+          this.lookAtMeCount = this.lookAtMeCount % 3 + 1
+          lookAtMeAudio.src = `audio/littlePrince/lookatme${this.lookAtMeCount}.mp3`
+          lookAtMeAudio.play()
+        }, 1000)
+      })
+      this.el.addEventListener('mouseenter', () => {
+        if (lookAtMeTimeout != null)
+          clearTimeout(lookAtMeTimeout)
+  
+        if (mayScrew)
+          return
+  
+        lookAtMeAudio.currentTime = 0
+        this.currentSpeechAudio.currentTime = 0
         this.screwSceneAudioCount[1] = 0
-
         lookAtMeAudio.pause()
+        this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
+        this.currentSpeechAudio.play()
+      })
+      this.el.addEventListener('mouseleave', () => {
+        if (mayScrew)
+          return
+  
+        lookAtMeAudio.currentTime = 0
+        this.currentSpeechAudio.currentTime = 0
+        this.screwSceneAudioCount[1] = 0
+        lookAtMeAudio.play()
+        this.currentSpeechAudio.pause()
+      })
 
-        if (this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
-          alert('SCENE DONE')
+      this.currentSpeechAudio.addEventListener('ended', () => {
+        if (this.screwSceneAudioCount[1] >= 1) {
+          mayScrew = true
+          this.screwSceneAudioCount[0]++
+          this.screwSceneAudioCount[1] = 0
+  
+          lookAtMeAudio.pause()
+  
+          if (this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
+            alert('SCENE DONE')
+            // TODO: Add gotoplanescene?
+          }
+  
+          return
+  
+        } else {
+          this.screwSceneAudioCount[1]++
         }
-
-        return
-
-      } else {
-        this.screwSceneAudioCount[1]++
-      }
-
-      this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
-      this.currentSpeechAudio.play()
+  
+        this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
+        this.currentSpeechAudio.play()
+      })
     })
   }
 })
@@ -138,8 +137,10 @@ AFRAME.registerComponent('screw', {
 
     el.setAttribute('gltf-model', `../assets/screws/screw_${color}/screw_${color}.gltf`)
 
-    el.addEventListener('click', () => removeScrew(this));
-    el.addEventListener('mouseleave', () => resetScrew(this))
+    el.addEventListener('startScrewScene', () => {
+      el.addEventListener('click', () => removeScrew(this));
+      el.addEventListener('mouseleave', () => resetScrew(this))
+    })
 
     var self = this;
     this.time = 0;
@@ -180,7 +181,9 @@ AFRAME.registerComponent('screwdriver', {
   init: function () {
     const { el } = this;
 
-    el.addEventListener('click', changeScrewdriver);
+    el.addEventListener('startScrewScene', () => {
+      el.addEventListener('click', changeScrewdriver);
+    })
   }
 })
 
@@ -369,9 +372,14 @@ goToPlaneScene = () => {
   document.querySelector('#lord-fader').emit('animate');
   setTimeout(() => {
     switchScene('paintScene', 'screwScene');
+    heldItem = null
     // camera.object3D.position.set(0, 0, 0);
     camera.object3D.position.set(-15, 5.93343, -5.41987);
-    prince.emit('startPlaneScene', false)
+    // prince.emit('startScrewScene', false)
+
+    document.querySelectorAll('#screwScene .interactable, #screwScene .pickup').forEach(el => {
+      el.emit('startScrewScene', false)
+    })
   }, 2000)
 }
 
