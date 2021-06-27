@@ -25,7 +25,7 @@ let screwSceneAudioOrder = [
 ]
 let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 let lookAtMeTimeout 
-let screwSceneAudioCount = [8, 0]
+let screwSceneAudioCount = [0, 0]
 
 window.addEventListener('load', () => {
   startupSequence(true);
