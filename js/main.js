@@ -12,12 +12,18 @@ let videoPhase = 0
 let mayScrew = false
 let prince
 let screwSceneAudioOrder = [
-  ['littlePrince/whatareyoudoing', 'pop'],
-  ['littlePrince/ohokbutwhy', 'pop'],
-  ['littlePrince/nobueno', 'pop'],
-  ['littlePrince/doyouthinkthesheepyoudrew', 'pop']
+  ['littlePrince/whatareyoudoing', 'pilot/fixingplane'],
+  ['littlePrince/ohokbutwhy', 'pilot/foodorwater'],
+  ['littlePrince/nobueno', 'pilot/busyasyoucansee'],
+  ['littlePrince/doyouthinkthesheepyoudrew', 'pilot/sheepeateverything'],
+  ['pop', 'pilot/protectit'],
+  ['pop', 'pilot/dontknowimbusy'],
+  ['pop', 'pilot/sillygames'],
+  ['pop', 'pilot/justleave'],
+  ['pop', 'pilot/maybehesright']
 ]
-lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
+let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
+let lookAtMeTimeout 
 
 window.addEventListener('load', () => {
   startupSequence(true)
@@ -44,20 +50,32 @@ AFRAME.registerComponent('prince', {
     
     lookAtMeAudio.volume = 0.5
     lookAtMeAudio.addEventListener('ended', () => {
-      setTimeout(() => {
+      if (lookAtMeTimeout != null)
+        clearTimeout(lookAtMeTimeout)
+
+      lookAtMeTimeout = setTimeout(() => {
         this.lookAtMeCount = this.lookAtMeCount % 3 + 1
         lookAtMeAudio.src = `audio/littlePrince/lookatme${this.lookAtMeCount}.mp3`
+        console.log('LOOKATME3')
         lookAtMeAudio.play()
       }, 1000)
     })
     this.el.addEventListener('startPlaneScene', () => {
-      setTimeout(() => {
+      if (lookAtMeTimeout != null)
+        clearTimeout(lookAtMeTimeout)
+
+      lookAtMeTimeout = setTimeout(() => {
+        console.log('LOOKATME4')
         lookAtMeAudio.play()
       }, 1000)
     })
     this.el.addEventListener('mouseenter', () => {
+      if (lookAtMeTimeout != null)
+        clearTimeout(lookAtMeTimeout)
+
       if (mayScrew)
         return
+
       lookAtMeAudio.currentTime = 0
       this.currentSpeechAudio.currentTime = 0
       this.screwSceneAudioCount[1] = 0
@@ -66,9 +84,9 @@ AFRAME.registerComponent('prince', {
       this.currentSpeechAudio.play()
     })
     this.el.addEventListener('mouseleave', () => {
-      console.log('MOUSE LEFTTT')
-      if (mayScrew || this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length)
+      if (mayScrew)
         return
+
       lookAtMeAudio.currentTime = 0
       this.currentSpeechAudio.currentTime = 0
       this.screwSceneAudioCount[1] = 0
@@ -87,8 +105,7 @@ AFRAME.registerComponent('prince', {
         console.log('RESET AND ONE UP')
 
         if (this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
-          console.log('DONE!!')
-          mayScrew = false
+          alert('SCENE DONE')
         }
 
         return
@@ -135,12 +152,9 @@ AFRAME.registerComponent('screw', {
       complete: function () {
         new Audio('../audio/pop.mp3').play();
         el.remove()
-        if (screwsContainer.children.length === 0){
-          heldItem.remove();
-          camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
-          goToPaintScene();
-        } else {
+        if (screwsContainer.children.length >= 1) {
           mayScrew = false
+          console.log('LOOKATME2')
           lookAtMeAudio.play()
         }
       }
