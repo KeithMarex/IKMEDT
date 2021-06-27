@@ -108,7 +108,7 @@ AFRAME.registerComponent('paintdot', {
           goToPlaneScene();
         } else {
           let pencilWrite = new Audio('../audio/pencil_write.mp3')
-          pencilWrite.volume = 0.5
+          pencilWrite.volume = 0.1
           pencilWrite.play();
           console.log(paintdotsContainer.children[id]);
           this.el.classList.remove('interactable');
