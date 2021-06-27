@@ -17,11 +17,11 @@ let screwSceneAudioOrder = [
   ['littlePrince/ohokbutwhy', 'pilot/foodorwater'],
   ['littlePrince/nobueno', 'pilot/busyasyoucansee'],
   ['littlePrince/doyouthinkthesheepyoudrew', 'pilot/sheepeateverything'],
-  ['pop', 'pilot/protectit'],
-  ['pop', 'pilot/dontknowimbusy'],
-  ['pop', 'pilot/sillygames'],
-  ['pop', 'pilot/justleave'],
-  ['pop', 'pilot/maybehesright']
+  ['littlePrince/rosesthornsforthen', 'pilot/protectit'],
+  ['littlePrince/thornsnotprotecttherose', 'pilot/dontknowimbusy'],
+  ['littlePrince/stomachupset', 'pilot/sillygames'],
+  ['littlePrince/whatdoyoumean', 'pilot/justleave'],
+  ['littlePrince/alwaysbusy', 'pilot/maybehesright']
 ]
 let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 let lookAtMeTimeout 
