@@ -25,10 +25,11 @@ let screwSceneAudioOrder = [
 ]
 let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 let lookAtMeTimeout 
-let screwSceneAudioCount = [0, 0]
+let screwSceneAudioCount = [8, 0]
 
 window.addEventListener('load', () => {
-  startupSequence(true)
+  startupSequence(true);
+  goToPlaneScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -107,8 +108,7 @@ AFRAME.registerComponent('prince', {
           lookAtMeAudio.pause()
   
           if (screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
-            alert('SCENE DONE')
-            // TODO: Add gotoplanescene?
+            goToFlyScene();
           }
   
           return
