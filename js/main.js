@@ -388,4 +388,5 @@ goToFlyScene = () => {
 switchScene = (currScene, newScene) => {
   document.getElementById(newScene).setAttribute('visible', 'true')
   document.getElementById(currScene).setAttribute('visible', 'false')
+  document.getElementById(currScene).remove();
 }
