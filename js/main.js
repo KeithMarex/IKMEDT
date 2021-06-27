@@ -107,10 +107,12 @@ AFRAME.registerComponent('paintdot', {
           new Audio('../audio/kids_cheering.mp3').play();
           goToPlaneScene();
         } else {
-          new Audio('../audio/pencil_write.mp3').play();
-        console.log(paintdotsContainer.children[id]);
-        this.el.classList.remove('interactable');
-        paintdotsContainer.children[id].setAttribute('visible', true);
+          let pencilWrite = new Audio('../audio/pencil_write.mp3')
+          pencilWrite.volume = 0.5
+          pencilWrite.play();
+          console.log(paintdotsContainer.children[id]);
+          this.el.classList.remove('interactable');
+          paintdotsContainer.children[id].setAttribute('visible', true);
         }
       }
     });
