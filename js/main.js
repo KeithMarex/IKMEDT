@@ -33,7 +33,7 @@ let lastDotId = 0
 window.addEventListener('load', () => {
   startupSequence(true);
   goToPlaneScene();
-  // goToFlyScene();
+  goToFlyScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -428,7 +428,9 @@ goToFlyScene = () => {
         audio.pause();
       }, 1000)
     }, 27000)
-    // property: position; to: 1 8 -10; dur: 2000; easing: linear; loop: true
+    setTimeout(() => {
+      new Audio('../audio/littlePrince/sheepthanks.mp3').play();
+    }, 12000)
   }, 2000)
 }
 
