@@ -26,6 +26,7 @@ let screwSceneAudioOrder = [
 let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 let lookAtMeTimeout 
 let screwSceneAudioCount = [0, 0]
+let lastDotId = 0
 
 window.addEventListener('load', () => {
   startupSequence(true);
@@ -194,6 +195,11 @@ AFRAME.registerComponent('paintdot', {
 
 
     el.addEventListener('mouseenter', () => {
+      if (id != lastDotId + 1 || (id == 1 && lastDotId >= 1))
+        return
+
+      lastDotId = id
+
       if (heldItem){
         if (paintDrawing === "box"){
           if (id === 4){
@@ -202,6 +208,8 @@ AFRAME.registerComponent('paintdot', {
               paintdotsBoxContainer.setAttribute('visible', 'false');
               goToPlaneScene();
               heldItem.remove();
+
+              lastDotId = 0
             }, 5000)
           } else {
             let pencilWrite = new Audio('../audio/pencil_write.mp3')
@@ -216,15 +224,15 @@ AFRAME.registerComponent('paintdot', {
               paintdotsSheepContainer.setAttribute('visible', 'false');
               document.getElementById('paintdots_sheep').remove()
               paintDrawing = "smallsheep";
-            }, 5000)
-            setTimeout(() => {
               paintdotsSmallSheepContainer.setAttribute('visible', 'true');
-            }, 100)
-        } else {
-          let pencilWrite = new Audio('../audio/pencil_write.mp3')
-          pencilWrite.volume = 0.1
-          pencilWrite.play();
-          paintdotsSheepContainer.children[id].setAttribute('visible', true);
+
+              lastDotId = 0
+            }, 5000)
+          } else {
+            let pencilWrite = new Audio('../audio/pencil_write.mp3')
+            pencilWrite.volume = 0.1
+            pencilWrite.play();
+            paintdotsSheepContainer.children[id].setAttribute('visible', true);
           }
         } else if (paintDrawing === "smallsheep"){
           if (id === 14){
@@ -234,6 +242,8 @@ AFRAME.registerComponent('paintdot', {
               document.getElementById('paintdots_smallsheep').remove()
               paintDrawing = "box";
               paintdotsBoxContainer.setAttribute('visible', 'true');
+
+              lastDotId = 0
             }, 5000)
         } else {
           let pencilWrite = new Audio('../audio/pencil_write.mp3')
