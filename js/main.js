@@ -378,6 +378,7 @@ function changeScrewdriver(event) {
 }
 
 goToPlaneScene = () => {
+
   document.querySelector('#lord-fader').emit('animate');
   setTimeout(() => {
     switchScene('paintScene', 'screwScene');
@@ -396,6 +397,13 @@ goToFlyScene = () => {
   document.querySelector('#lord-fader').emit('animate');
   setTimeout(() => {
     switchScene('screwScene', 'planeScene');
+    
+    if (document.getElementById('screwScene'))
+      document.getElementById('screwScene').remove()
+  
+    if (document.getElementById('paintScene'))
+      document.getElementById('paintScene').remove()
+
     camera.object3D.position.set(2, 53, -290);
   }, 2000)
 }
