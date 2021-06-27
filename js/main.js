@@ -32,8 +32,6 @@ let lastDotId = 0
 
 window.addEventListener('load', () => {
   startupSequence(true);
-  goToPlaneScene();
-  goToFlyScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -265,7 +263,7 @@ AFRAME.registerComponent('paintdot', {
           }
         }
       } else {
-        new Audio('../audio/littlePrince/whatareyoudoing.mp3').play()
+        new Audio('../audio/littlePrince/pencil.mp3').play()
       }
     });
   }
