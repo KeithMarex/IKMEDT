@@ -25,6 +25,7 @@ let screwSceneAudioOrder = [
 ]
 let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 let lookAtMeTimeout 
+let screwSceneAudioCount = [0, 0]
 
 window.addEventListener('load', () => {
   startupSequence(true)
@@ -49,8 +50,7 @@ function startGame() {
 
 AFRAME.registerComponent('prince', {
   init: function () {
-    this.screwSceneAudioCount = [0, 0]
-    this.currentSpeechAudio = new Audio('audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3')
+    this.currentSpeechAudio = new Audio('audio/' + screwSceneAudioOrder[screwSceneAudioCount[0]][screwSceneAudioCount[1]] + '.mp3')
     this.lookAtMeCount = 0
 
     lookAtMeAudio.volume = 0.5
@@ -82,9 +82,9 @@ AFRAME.registerComponent('prince', {
   
         lookAtMeAudio.currentTime = 0
         this.currentSpeechAudio.currentTime = 0
-        this.screwSceneAudioCount[1] = 0
+        screwSceneAudioCount[1] = 0
         lookAtMeAudio.pause()
-        this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
+        this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[screwSceneAudioCount[0]][screwSceneAudioCount[1]] + '.mp3'
         this.currentSpeechAudio.play()
       })
       this.el.addEventListener('mouseleave', () => {
@@ -93,20 +93,20 @@ AFRAME.registerComponent('prince', {
   
         lookAtMeAudio.currentTime = 0
         this.currentSpeechAudio.currentTime = 0
-        this.screwSceneAudioCount[1] = 0
+        screwSceneAudioCount[1] = 0
         lookAtMeAudio.play()
         this.currentSpeechAudio.pause()
       })
 
       this.currentSpeechAudio.addEventListener('ended', () => {
-        if (this.screwSceneAudioCount[1] >= 1) {
+        if (screwSceneAudioCount[1] >= 1) {
           mayScrew = true
-          this.screwSceneAudioCount[0]++
-          this.screwSceneAudioCount[1] = 0
+          screwSceneAudioCount[0]++
+          screwSceneAudioCount[1] = 0
   
           lookAtMeAudio.pause()
   
-          if (this.screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
+          if (screwSceneAudioCount[0] >= screwSceneAudioOrder.length) {
             alert('SCENE DONE')
             // TODO: Add gotoplanescene?
           }
@@ -114,10 +114,10 @@ AFRAME.registerComponent('prince', {
           return
   
         } else {
-          this.screwSceneAudioCount[1]++
+          screwSceneAudioCount[1]++
         }
   
-        this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[this.screwSceneAudioCount[0]][this.screwSceneAudioCount[1]] + '.mp3'
+        this.currentSpeechAudio.src = 'audio/' + screwSceneAudioOrder[screwSceneAudioCount[0]][screwSceneAudioCount[1]] + '.mp3'
         this.currentSpeechAudio.play()
       })
     })
@@ -158,11 +158,8 @@ AFRAME.registerComponent('screw', {
       complete: function () {
         new Audio('../audio/pop.mp3').play();
         el.remove()
-        if (screwsContainer.children.length >= 1) {
-          mayScrew = false
-          lookAtMeAudio.play()
-          console.log('LAM3')
-        }
+        mayScrew = false
+        lookAtMeAudio.play()
       }
     });
     this.animation.began = true;
