@@ -9,6 +9,7 @@ let bgWind = new Audio('../audio/bg_wind.mp3')
 bgWind.loop = true
 bgWind.volume = 0.5
 let videoPhase = 0
+let mayScrew = false
 
 window.addEventListener('load', () => {
   startupSequence(true)
@@ -17,6 +18,7 @@ window.addEventListener('load', () => {
 })
 
 function startGame() {
+  goToPlaneScene()
   const equippableItems = document.getElementsByClassName('pickup')
   heldItem = null
   screwdriversContainer = document.getElementById('screwdrivers')
@@ -29,8 +31,18 @@ function startGame() {
 
 AFRAME.registerComponent('prince', {
   init: function () {
-    console.log(this)
     this.animation
+    this.lookAtMeCount = 1
+    this.lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
+    this.lookAtMeAudio.volume = 0.5
+    this.lookAtMeAudio.play()
+    this.lookAtMeAudio.addEventListener('ended', () => {
+      setTimeout(() => {
+        this.lookAtMeCount = this.lookAtMeCount % 3 + 1
+        this.lookAtMeAudio.src = `audio/littlePrince/lookatme${this.lookAtMeCount}.mp3`
+        this.lookAtMeAudio.play()
+      }, 1000)
+    })
   }
 })
 
