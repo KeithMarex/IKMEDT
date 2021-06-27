@@ -1,6 +1,6 @@
 let heldItem
 let screwdriversContainer
-let paintdotsContainer
+let paintdotsSheepContainer
 let screwsContainer
 let equippableItemsBackup
 let camera
@@ -10,6 +10,7 @@ bgWind.loop = true
 bgWind.volume = 0.5
 let videoPhase = 0
 let mayScrew = false
+let paintDrawing = "sheep";
 let prince
 let screwSceneAudioOrder = [
   ['littlePrince/whatareyoudoing', 'pilot/fixingplane'],
@@ -31,15 +32,19 @@ window.addEventListener('load', () => {
 })
 
 function startGame() {
+  // goToPlaneScene()
   prince = document.getElementById('little_prince')
-  goToPlaneScene()
   const equippableItems = document.getElementsByClassName('pickup')
   heldItem = null
   screwdriversContainer = document.getElementById('screwdrivers')
   screwsContainer = document.getElementById('screws')
-  paintdotsContainer = document.getElementById('paintdots')
+  paintdotsSheepContainer = document.getElementById('paintdots_sheep')
+  paintdotsSmallSheepContainer = document.getElementById('paintdots_smallsheep')
+  paintdotsBoxContainer = document.getElementById('paintdots_box')
+
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
+  camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
 }
 
 AFRAME.registerComponent('prince', {
@@ -188,19 +193,57 @@ AFRAME.registerComponent('paintdot', {
     const { id } = data;
 
 
-    el.addEventListener('click', () => {
+    el.addEventListener('mouseenter', () => {
       if (heldItem){
-        if (id === 27){
-          new Audio('../audio/kids_cheering.mp3').play();
-          goToPlaneScene();
+        if (paintDrawing === "box"){
+          if (id === 4){
+            new Audio('../audio/littlePrince/thissheepisperfect.mp3').play();
+            setTimeout(() => {
+              paintdotsBoxContainer.setAttribute('visible', 'false');
+              goToPlaneScene();
+              heldItem.remove();
+            }, 5000)
+          } else {
+            let pencilWrite = new Audio('../audio/pencil_write.mp3')
+            pencilWrite.volume = 0.1
+            pencilWrite.play();
+            paintdotsBoxContainer.children[id].setAttribute('visible', true);
+            }
+        } else if (paintDrawing === "sheep"){
+          if (id === 27){
+            new Audio('../audio/littlePrince/thatsheepistobig.mp3').play();
+            setTimeout(() => {
+              paintdotsSheepContainer.setAttribute('visible', 'false');
+              document.getElementById('paintdots_sheep').remove()
+              paintDrawing = "smallsheep";
+            }, 5000)
+            setTimeout(() => {
+              paintdotsSmallSheepContainer.setAttribute('visible', 'true');
+            }, 100)
         } else {
           let pencilWrite = new Audio('../audio/pencil_write.mp3')
           pencilWrite.volume = 0.1
           pencilWrite.play();
-          console.log(paintdotsContainer.children[id]);
-          this.el.classList.remove('interactable');
-          paintdotsContainer.children[id].setAttribute('visible', true);
+          paintdotsSheepContainer.children[id].setAttribute('visible', true);
+          }
+        } else if (paintDrawing === "smallsheep"){
+          if (id === 14){
+            new Audio('../audio/littlePrince/thatsheepistoosmall.mp3').play();
+            setTimeout(() => {
+              paintdotsSmallSheepContainer.setAttribute('visible', 'false');
+              document.getElementById('paintdots_smallsheep').remove()
+              paintDrawing = "box";
+              paintdotsBoxContainer.setAttribute('visible', 'true');
+            }, 5000)
+        } else {
+          let pencilWrite = new Audio('../audio/pencil_write.mp3')
+          pencilWrite.volume = 0.1
+          pencilWrite.play();
+          paintdotsSmallSheepContainer.children[id].setAttribute('visible', true);
+          }
         }
+      } else {
+        new Audio('../audio/littlePrince/whatareyoudoing.mp3').play()
       }
     });
   }
@@ -327,10 +370,18 @@ goToPlaneScene = () => {
   console.log(prince.prince)
   setTimeout(() => {
     switchScene('paintScene', 'screwScene');
-    // camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
+    // camera.object3D.position.set(0, 0, 0);
+    camera.object3D.position.set(-15, 5.93343, -5.41987);
     prince.emit('startPlaneScene', false)
   }, 2000)
+}
 
+goToFlyScene = () => {
+  document.querySelector('#lord-fader').emit('animate');
+  setTimeout(() => {
+    switchScene('screwScene', 'planeScene');
+    camera.object3D.position.set(2, 53, -290);
+  }, 2000)
 }
 
 switchScene = (currScene, newScene) => {
