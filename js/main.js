@@ -11,7 +11,7 @@ bgWind.volume = 0.5
 let videoPhase = 0
 
 window.addEventListener('load', () => {
-  startupSequence()
+  startupSequence(true)
   // let prince = document.getElementById('little_prince')
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
@@ -124,13 +124,21 @@ AFRAME.registerComponent('pencil', {
   }
 })
 
-function startupSequence() {
+function startupSequence(skip=false) {
   let video = document.getElementById('intro_video');
   video.volume = 0.2;
   video.src = 'video/little_prince_intro_trim.mp4'
-
+  
   let titleText = document.getElementById('title_text');
-  console.log('we here')
+
+  if (skip) {
+    titleText.remove()
+    video.remove()
+    document.getElementById('mainScene').classList.remove('hide')
+    startGame()
+    return
+  }
+
 
   video.addEventListener('ended', function(){
       videoPhase++
