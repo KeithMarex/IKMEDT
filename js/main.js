@@ -30,6 +30,8 @@ let lastDotId = 0
 
 window.addEventListener('load', () => {
   startupSequence(true);
+  goToPlaneScene();
+  goToFlyScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
