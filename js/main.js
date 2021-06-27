@@ -24,7 +24,7 @@ function startGame() {
   paintdotsContainer = document.getElementById('paintdots')
   equippableItemsBackup = equippableItems
   camera = document.getElementById("camera")
-  // goToPaintScene()
+  camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
 }
 
 AFRAME.registerComponent('prince', {
@@ -105,6 +105,7 @@ AFRAME.registerComponent('paintdot', {
       if (heldItem){
         if (id === 27){
           new Audio('../audio/kids_cheering.mp3').play();
+          goToPlaneScene();
         } else {
           new Audio('../audio/pencil_write.mp3').play();
         console.log(paintdotsContainer.children[id]);
@@ -224,10 +225,10 @@ function changeScrewdriver(event) {
   this.remove()
 }
 
-goToPaintScene = () => {
+goToPlaneScene = () => {
   document.querySelector('#lord-fader').emit('animate');
   setTimeout(() => {
-    switchScene('screwScene', 'paintScene');
+    switchScene('paintScene', 'screwScene');
     camera.object3D.position.set(-25.89556, 5.93343, -5.41987);
   }, 2000)
 
