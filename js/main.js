@@ -25,12 +25,14 @@ let screwSceneAudioOrder = [
 ]
 let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 let lookAtMeTimeout 
-let screwSceneAudioCount = [0, 0]
+let screwSceneAudioCount = [8, 0]
+let flyingplane
+let flyingcamera
 
 window.addEventListener('load', () => {
   startupSequence(true);
   goToPlaneScene();
-  goToFlyScene();
+  // goToFlyScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -183,6 +185,14 @@ AFRAME.registerComponent('screwdriver', {
     el.addEventListener('startScrewScene', () => {
       el.addEventListener('click', changeScrewdriver);
     })
+  }
+})
+
+AFRAME.registerComponent('flyplane', {
+  init: function () {
+    const { el } = this;
+
+    flyingplane = el;
   }
 })
 
@@ -387,6 +397,20 @@ goToFlyScene = () => {
   setTimeout(() => {
     switchScene('screwScene', 'planeScene');
     camera.object3D.position.set(2, 53, -290);
+    flyingplane.setAttribute('animation', 'property: position; to: -9 0 300; dur: 30500; easing: linear; loop: true')
+    camera.setAttribute('animation', 'property: position; to: 2 53 300; dur: 30000; easing: linear; loop: true')
+    const audio = new Audio('../audio/pilot/airplane.mp3');
+    audio.loop = true;
+    audio.volume = 0.1;
+    audio.play();
+    setTimeout(() => {
+      document.querySelector('#lord-fader').emit('animate');
+      setTimeout(() => {
+        document.getElementById('planeScene').remove();
+        audio.pause();
+      }, 1000)
+    }, 27000)
+    // property: position; to: 1 8 -10; dur: 2000; easing: linear; loop: true
   }, 2000)
 }
 
