@@ -28,6 +28,7 @@ let lookAtMeTimeout
 
 window.addEventListener('load', () => {
   startupSequence(true)
+  goToFlyScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
