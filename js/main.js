@@ -31,7 +31,7 @@ let screwSceneAudioCount = [0, 0]
 let lastDotId = 0
 
 window.addEventListener('load', () => {
-  startupSequence();
+  startupSequence(true);
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -211,7 +211,7 @@ AFRAME.registerComponent('paintdot', {
       if (heldItem){
         lastDotId = id
         if (paintDrawing === "box"){
-          if (id === 4){
+          if (id === 32){
             new Audio('../audio/littlePrince/thissheepisperfect.mp3').play();
             setTimeout(() => {
               paintdotsBoxContainer.setAttribute('visible', 'false');
@@ -227,7 +227,7 @@ AFRAME.registerComponent('paintdot', {
             paintdotsBoxContainer.children[id].setAttribute('visible', true);
             }
         } else if (paintDrawing === "sheep"){
-          if (id === 27){
+          if (id === 27){ // TODO: MAKE 27
             new Audio('../audio/littlePrince/thatsheepistobig.mp3').play();
             setTimeout(() => {
               paintdotsSheepContainer.setAttribute('visible', 'false');
@@ -244,7 +244,7 @@ AFRAME.registerComponent('paintdot', {
             paintdotsSheepContainer.children[id].setAttribute('visible', true);
           }
         } else if (paintDrawing === "smallsheep"){
-          if (id === 14){
+          if (id === 14){ // TODO: MAKE 14
             new Audio('../audio/littlePrince/thatsheepistoosmall.mp3').play();
             setTimeout(() => {
               paintdotsSmallSheepContainer.setAttribute('visible', 'false');
