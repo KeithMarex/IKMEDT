@@ -30,8 +30,6 @@ let lastDotId = 0
 
 window.addEventListener('load', () => {
   startupSequence(true);
-  goToPlaneScene();
-  goToFlyScene();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -200,9 +198,8 @@ AFRAME.registerComponent('paintdot', {
       if (id != lastDotId + 1 || (id == 1 && lastDotId >= 1))
         return
 
-      lastDotId = id
-
       if (heldItem){
+        lastDotId = id
         if (paintDrawing === "box"){
           if (id === 4){
             new Audio('../audio/littlePrince/thissheepisperfect.mp3').play();
