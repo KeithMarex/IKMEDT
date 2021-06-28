@@ -31,7 +31,7 @@ let screwSceneAudioCount = [0, 0]
 let lastDotId = 0
 
 window.addEventListener('load', () => {
-  startupSequence(true);
+  startupSequence();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
@@ -285,7 +285,6 @@ function startupSequence(skip=false) {
   let titleText = document.getElementById('title_text');
 
   if (skip) {
-    titleText.remove()
     video.remove()
     document.getElementById('mainScene').classList.remove('hide')
     startGame()
@@ -311,8 +310,8 @@ function startupSequence(skip=false) {
         video.classList.add('hide')
         titleText.innerHTML = 'LITTLE PRINCE VR'
         setTimeout(() => {
-          titleText.remove()
           document.getElementById('mainScene').classList.remove('hide')
+          titleText.classList.remove('visible')
           startGame()
         }, 3000)
       }
@@ -391,9 +390,7 @@ goToPlaneScene = () => {
   setTimeout(() => {
     switchScene('paintScene', 'screwScene');
     heldItem = null
-    // camera.object3D.position.set(0, 0, 0);
     camera.object3D.position.set(-15, 5.93343, -5.41987);
-    // prince.emit('startScrewScene', false)
 
     document.querySelectorAll('#screwScene .interactable, #screwScene .pickup').forEach(el => {
       el.emit('startScrewScene', false)
@@ -424,6 +421,10 @@ goToFlyScene = () => {
       setTimeout(() => {
         document.getElementById('planeScene').remove();
         audio.pause();
+        console.log('HOI DIT WQORDT NU WEERGEGEVEN')
+        let titleText2 = document.getElementById('title_text');
+        titleText2.classList.add('visible')
+        titleText2.innerHTML = "The end..."
       }, 1000)
     }, 27000)
     setTimeout(() => {
