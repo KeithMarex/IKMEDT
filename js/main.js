@@ -208,9 +208,8 @@ AFRAME.registerComponent('paintdot', {
       if (id != lastDotId + 1 || (id == 1 && lastDotId >= 1))
         return
 
-      lastDotId = id
-
       if (heldItem){
+        lastDotId = id
         if (paintDrawing === "box"){
           if (id === 4){
             new Audio('../audio/littlePrince/thissheepisperfect.mp3').play();
