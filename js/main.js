@@ -227,7 +227,7 @@ AFRAME.registerComponent('paintdot', {
             paintdotsBoxContainer.children[id].setAttribute('visible', true);
             }
         } else if (paintDrawing === "sheep"){
-          if (id === 27){ // TODO: MAKE 27
+          if (id === 27){
             new Audio('../audio/littlePrince/thatsheepistobig.mp3').play();
             setTimeout(() => {
               paintdotsSheepContainer.setAttribute('visible', 'false');
@@ -244,7 +244,7 @@ AFRAME.registerComponent('paintdot', {
             paintdotsSheepContainer.children[id].setAttribute('visible', true);
           }
         } else if (paintDrawing === "smallsheep"){
-          if (id === 14){ // TODO: MAKE 14
+          if (id === 14){
             new Audio('../audio/littlePrince/thatsheepistoosmall.mp3').play();
             setTimeout(() => {
               paintdotsSmallSheepContainer.setAttribute('visible', 'false');
