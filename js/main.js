@@ -25,6 +25,8 @@ let screwSceneAudioOrder = [
 ]
 let lookAtMeAudio = new Audio('audio/littlePrince/lookatme1.mp3')
 let lookAtMeTimeout 
+let flyingplane
+let flyingcamera
 let screwSceneAudioCount = [0, 0]
 let lastDotId = 0
 
@@ -185,6 +187,14 @@ AFRAME.registerComponent('screwdriver', {
   }
 })
 
+AFRAME.registerComponent('flyplane', {
+  init: function () {
+    const { el } = this;
+
+    flyingplane = el;
+  }
+})
+
 AFRAME.registerComponent('paintdot', {
   schema: {
     id: { type: 'int' }
@@ -252,7 +262,7 @@ AFRAME.registerComponent('paintdot', {
           }
         }
       } else {
-        new Audio('../audio/littlePrince/whatareyoudoing.mp3').play()
+        new Audio('../audio/littlePrince/pencil.mp3').play()
       }
     });
   }
@@ -402,6 +412,22 @@ goToFlyScene = () => {
       document.getElementById('paintScene').remove()
 
     camera.object3D.position.set(2, 53, -290);
+    flyingplane.setAttribute('animation', 'property: position; to: -9 0 300; dur: 30500; easing: linear; loop: true')
+    camera.setAttribute('animation', 'property: position; to: 2 53 300; dur: 30000; easing: linear; loop: true')
+    const audio = new Audio('../audio/pilot/airplane.mp3');
+    audio.loop = true;
+    audio.volume = 0.1;
+    audio.play();
+    setTimeout(() => {
+      document.querySelector('#lord-fader').emit('animate');
+      setTimeout(() => {
+        document.getElementById('planeScene').remove();
+        audio.pause();
+      }, 1000)
+    }, 27000)
+    setTimeout(() => {
+      new Audio('../audio/littlePrince/sheepthanks.mp3').play();
+    }, 12000)
   }, 2000)
 }
 
