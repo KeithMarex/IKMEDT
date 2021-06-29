@@ -31,7 +31,7 @@ let screwSceneAudioCount = [0, 0]
 let lastDotId = 0
 
 window.addEventListener('load', () => {
-  startupSequence(true);
+  startupSequence();
   // prince.setAttribute('animation-mixer', 'clip: run; loop: true')
 })
 
